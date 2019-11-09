@@ -108,4 +108,45 @@ http://www.springframework.org/schema/context		   http://www.springframework.org
             </array>
         </property>
     </bean>
+    <!--注入map类型-->
+    <bean id="injectMap" class="com.spring.dependencyinject.injectMap.MapTestBean">
+        <property name="values">
+            <map key-type="java.lang.String" value-type="java.lang.String">
+                <entry>
+                    <key><value>1</value></key>
+                    <value>值1</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <!--注入Properties-->
+    <bean id="injectProperties" class="com.spring.dependencyinject.injectProperties.PropertiesTestBean">
+        <property name="values">
+            <props value-type="int" merge="default">
+                <prop key="1">1</prop>
+                <prop key="2">2</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="injectProperties2" class="com.spring.dependencyinject.injectProperties.PropertiesTestBean">
+        <property name="values">
+                <value>
+                    1=11
+                    2=22
+                    3=33,
+                    4=44;
+                </value>
+        </property>
+    </bean>
+    <!--引用其他类型的Bean-->
+    <!--定义依赖的Bean-->
+    <bean id="relyBean" class="com.spring.dependencyinject.refOtherBean.byConstructor.HelloImpl"></bean>
+    <!--通过构造器注入-->
+    <bean id="bean1" class="com.spring.dependencyinject.refOtherBean.byConstructor.HelloApiDecorator">
+        <constructor-arg index="0" ref="relyBean"/>
+    </bean>
+    <!--通过setter注入-->
+    <bean id="bean2" class="com.spring.dependencyinject.refOtherBean.byConstructor.HelloApiDecorator">
+        <property name="helloApi"><ref bean="relyBean"/></property>
+    </bean>
 </beans>
