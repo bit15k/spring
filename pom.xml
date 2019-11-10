@@ -8,7 +8,6 @@
     <artifactId>spring</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-
     <dependencies>
 
         <dependency>
@@ -52,6 +51,24 @@
             <artifactId>junit</artifactId>
             <version>4.13-beta-3</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>3.0.5.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.6.8</version>
+        </dependency>
+
+
+
+
+
+
 
         <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.log4j/com.springsource.org.apache.log4j &ndash;&gt;-->
 <!--        <dependency>-->

@@ -8,7 +8,7 @@ public class Test {
     public void testConstructor() {
         //1、读取配置文件实例化一个IoC容器
         ApplicationContext context =
-                new ClassPathXmlApplicationContext("helloworld.xml");
+                new ClassPathXmlApplicationContext("spring.xml");
         //2、从容器中获取Bean，注意此处完全“面向接口编程，而不是面向实现”
         //测试构造器注入
         //测试根据索引注入
