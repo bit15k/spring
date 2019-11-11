@@ -191,14 +191,40 @@ http://www.springframework.org/schema/aop
     <!--AOP简单例子-->
     <bean id="helloWorldService" class="com.spring.aop.service.impl.HelloWorldService"/>
     <bean id="aspect" class="com.spring.aop.HelloWorldAspect"/>
+    <bean id="beforeAdvice" class="com.spring.aop.service.impl.BeforeAdviceImpl"></bean>
+    <aop:aspectj-autoproxy/>
     <aop:config>
+
         <aop:pointcut id="pointcut" expression="execution(* com.spring.aop.service..*.*(..))"/>
+        <aop:advisor pointcut="execution(* com.spring.aop.service.IHelloWorldService.sayAdvisorBefore(..))" advice-ref="beforeAdvice" />
         <aop:aspect ref="aspect">
+            <!--前置通知带参数的切入点配置-->
             <aop:before pointcut="execution(* com.spring.aop.service.impl.HelloWorldService.sayBefore(String)) and args(param)"
                          method="beforeAdvice(java.lang.String)" arg-names="param"  />
-          <aop:before pointcut="execution(* com.spring.aop.service..*.*(..))" method="beforeAdvice"/>
-            <aop:after pointcut="execution(* com.spring.aop.service..*.*(..))" method="afterFinallyAdvice"/>
+            <!--前置通知不带参数的切入点配置-->
+<!--            <aop:before pointcut="execution(* com.spring.aop.service..*.*(..))" method="beforeAdvice"/>-->
+            <!--后置最终通知不带参数的切入点配置-->
+<!--            <aop:after pointcut="execution(* com.spring.aop.service..*.*(..))" method="afterFinallyAdvice"/>-->
+            <!--后置返回通知的切入点配置-->
+            <aop:after-returning pointcut="execution(* com.spring.aop.service.impl.HelloWorldService.sayAfterReturning(..))"
+                                 method="afterReturningAdvice"
+                                 arg-names="retVal"
+                                 returning="retVal"/>
+            <!--后置异常通知的切入点配置-->
+            <aop:after-throwing pointcut="execution(* com.spring.aop.service.impl.HelloWorldService.sayAfterThrowing(..))"
+                                method="afterThrowingAdvice"
+                                arg-names="exception"
+                                throwing="exception"/>
+            <!--后置最终通知-->
+            <aop:after pointcut="execution(* com.spring.aop.service.impl.HelloWorldService.sayAfter(..))" method="afterFinallyAdvice"></aop:after>
+            <!--环绕通知切入点配置-->
+            <aop:around pointcut="execution(* com.spring.aop.service.impl.HelloWorldService.sayAround(..))"
+                        method="aroundAdvice"/>
+            <!--配置引入-->
+            <aop:declare-parents types-matching="com.spring.aop.service.IHelloWorldService+" implement-interface="com.spring.aop.service.IIntroductionService"
+            default-impl="com.spring.aop.service.impl.IntroductiondService"></aop:declare-parents>
         </aop:aspect>
+            <!--advisor-->
     </aop:config>
     <!--前置通知测试-->
 <!--    <aop:config>-->
