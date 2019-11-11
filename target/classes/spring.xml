@@ -225,6 +225,12 @@ http://www.springframework.org/schema/aop
         </aop:aspect>
             <!--advisor-->
     </aop:config>
+    <!--开启注解式AspectJ的AOP-->
+    <aop:aspectj-autoproxy/>
+    <!--声明切入点所在类-->
+    <bean id="helloService" class="com.spring.aopAspectJ.HelloService"/>
+    <!--声明切面-->
+    <bean id="aspect2" class="com.spring.aopAspectJ.HelloWorldAspect2"/>
     <!--前置通知测试-->
 <!--    <aop:config>-->
 <!--        <aop:aspect ref="aspect">-->

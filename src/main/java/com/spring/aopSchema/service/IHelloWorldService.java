@@ -1,5 +1,8 @@
-package com.spring.aop.service;
+package com.spring.aopSchema.service;
 
+/**
+ * 各种业务逻辑的接口，此处每个方法用于测试各种通知而写的
+ */
 public interface IHelloWorldService {
     //测试一般
     public void sayHello();
@@ -13,7 +16,7 @@ public interface IHelloWorldService {
     public void sayAfter();
     //测试环绕通知的目标方法
     public void sayAround(String param);
-    //
+    //测试Advisor
     public void sayAdvisorBefore(String param);
 
 

@@ -188,49 +188,61 @@ http://www.springframework.org/schema/aop
 <!--        <property name="navigationB.properties[0]" ref="c"></property>-->
 <!--        <property name="navigationB.array[0]" ref="c"></property>-->
     </bean>
-    <!--AOP简单例子-->
-    <bean id="helloWorldService" class="com.spring.aop.service.impl.HelloWorldService"/>
-    <bean id="aspect" class="com.spring.aop.HelloWorldAspect"/>
-    <bean id="beforeAdvice" class="com.spring.aop.service.impl.BeforeAdviceImpl"></bean>
-    <aop:aspectj-autoproxy/>
+    <!-- ************************************************************************************************************************ -->
+    <!--基于schema的AOP配置
+    主要包含下列：
+    -配置切面
+    -配置切入点
+    -配置通知
+        前置、后置返回、后置异常、后置最终、环绕通知、配置引入
+    -通过advisor配置只含有一个通知的切面
+    -->
+    <bean id="helloWorldService" class="com.spring.aopSchema.service.impl.HelloWorldService"/>
+    <!--配置切面Bean-->
+    <bean id="aspect" class="com.spring.aopSchema.aspect.HelloWorldAspect"/>
+    <!--配置advisor中的前置通知Bean-->
+    <bean id="beforeAdvice" class="com.spring.aopSchema.service.impl.BeforeAdviceImpl"></bean>
     <aop:config>
-
-        <aop:pointcut id="pointcut" expression="execution(* com.spring.aop.service..*.*(..))"/>
-        <aop:advisor pointcut="execution(* com.spring.aop.service.IHelloWorldService.sayAdvisorBefore(..))" advice-ref="beforeAdvice" />
-        <aop:aspect ref="aspect">
+        <!--切入点可以单独配置，用于pointcut-ref指向此-->
+        <aop:pointcut id="pointcut" expression="execution(* com.spring.aopSchema.service..*.*(..))"/>
+        <!--配置advisor：必须位于此处！配置切入点和通知；advisor是只有一个通知的切面-->
+        <aop:advisor pointcut="execution(* com.spring.aopSchema.service.IHelloWorldService.sayAdvisorBefore(..))" advice-ref="beforeAdvice" />
+        <!--配置切面-->
+        <aop:aspect ref="aspect"><!--指定切面-->
             <!--前置通知带参数的切入点配置-->
-            <aop:before pointcut="execution(* com.spring.aop.service.impl.HelloWorldService.sayBefore(String)) and args(param)"
+            <aop:before pointcut="execution(* com.spring.aopSchema.service.impl.HelloWorldService.sayBefore(String)) and args(param)"
                          method="beforeAdvice(java.lang.String)" arg-names="param"  />
             <!--前置通知不带参数的切入点配置-->
-<!--            <aop:before pointcut="execution(* com.spring.aop.service..*.*(..))" method="beforeAdvice"/>-->
+<!--            <aop:before pointcut="execution(* com.spring.aopSchema.service..*.*(..))" method="beforeAdvice"/>-->
             <!--后置最终通知不带参数的切入点配置-->
-<!--            <aop:after pointcut="execution(* com.spring.aop.service..*.*(..))" method="afterFinallyAdvice"/>-->
+<!--            <aop:after pointcut="execution(* com.spring.aopSchema.service..*.*(..))" method="afterFinallyAdvice"/>-->
             <!--后置返回通知的切入点配置-->
-            <aop:after-returning pointcut="execution(* com.spring.aop.service.impl.HelloWorldService.sayAfterReturning(..))"
+            <aop:after-returning pointcut="execution(* com.spring.aopSchema.service.impl.HelloWorldService.sayAfterReturning(..))"
                                  method="afterReturningAdvice"
                                  arg-names="retVal"
                                  returning="retVal"/>
             <!--后置异常通知的切入点配置-->
-            <aop:after-throwing pointcut="execution(* com.spring.aop.service.impl.HelloWorldService.sayAfterThrowing(..))"
+            <aop:after-throwing pointcut="execution(* com.spring.aopSchema.service.impl.HelloWorldService.sayAfterThrowing(..))"
                                 method="afterThrowingAdvice"
                                 arg-names="exception"
                                 throwing="exception"/>
-            <!--后置最终通知-->
-            <aop:after pointcut="execution(* com.spring.aop.service.impl.HelloWorldService.sayAfter(..))" method="afterFinallyAdvice"></aop:after>
+            <!--后置最终通知的切入点配置-->
+            <aop:after pointcut="execution(* com.spring.aopSchema.service.impl.HelloWorldService.sayAfter(..))" method="afterFinallyAdvice"></aop:after>
             <!--环绕通知切入点配置-->
-            <aop:around pointcut="execution(* com.spring.aop.service.impl.HelloWorldService.sayAround(..))"
+            <aop:around pointcut="execution(* com.spring.aopSchema.service.impl.HelloWorldService.sayAround(..))"
                         method="aroundAdvice"/>
             <!--配置引入-->
-            <aop:declare-parents types-matching="com.spring.aop.service.IHelloWorldService+" implement-interface="com.spring.aop.service.IIntroductionService"
-            default-impl="com.spring.aop.service.impl.IntroductiondService"></aop:declare-parents>
+            <aop:declare-parents types-matching="com.spring.aopSchema.service.IHelloWorldService+" implement-interface="com.spring.aopSchema.service.IIntroductionService"
+                                 default-impl="com.spring.aopSchema.service.impl.IntroductiondService"></aop:declare-parents>
         </aop:aspect>
             <!--advisor-->
     </aop:config>
-    <!--前置通知测试-->
-<!--    <aop:config>-->
-<!--        <aop:aspect ref="aspect">-->
-<!--            <aop:before pointcut="execution(* com.spring.aop.service..*.sayBefore(..))and args(param)"-->
-<!--                        method="beforeAdvice(java.lang.String)" arg-names="param"/>-->
-<!--        </aop:aspect>-->
-<!--    </aop:config>-->
+    <!--基于注解式AspectJ的AOP配置-->
+    <!--首先配置开启-->
+    <aop:aspectj-autoproxy/>
+    <!--声明切入点所在类-->
+    <bean id="helloWorldServiceImpl" class="com.spring.aopAspectJ.Service.impl.HelloWorldServiceImpl"/>
+    <!--声明切面-->
+    <bean id="aspect2" class="com.spring.aopAspectJ.aspect.HelloWorldAspect2"/>
+    <!--通知的配置全部以@注解的形式在切面类中中配置-->
 </beans>

@@ -1,5 +1,5 @@
-package com.spring.aop.service.impl;
-import com.spring.aop.service.*;
+package com.spring.aopSchema.service.impl;
+import com.spring.aopSchema.service.*;
 
 public class HelloWorldService implements IHelloWorldService {
     public void sayHello() {

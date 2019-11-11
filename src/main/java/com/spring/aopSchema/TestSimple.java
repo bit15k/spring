@@ -1,7 +1,7 @@
-package com.spring.aop;
+package com.spring.aopSchema;
 
-import com.spring.aop.service.IHelloWorldService;
-import com.spring.aop.service.IIntroductionService;
+import com.spring.aopSchema.service.IHelloWorldService;
+import com.spring.aopSchema.service.IIntroductionService;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -23,6 +23,10 @@ public class TestSimple {
         //后置环绕通知测试
         //helloworldService.sayAround("haha");
     }
+
+    /**
+     * 测试引入一个新的接口
+     */
     @Test
     public void testSchemaIntroduction() {
         System.out.println("======================================");
@@ -32,6 +36,10 @@ public class TestSimple {
         introductionService.induct();
         System.out.println("======================================");
     }
+
+    /**
+     * 测试advisor
+     */
     @Test
     public void testSchemaAdvisor() {
         System.out.println("======================================");

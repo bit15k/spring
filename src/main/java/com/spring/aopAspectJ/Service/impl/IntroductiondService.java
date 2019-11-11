@@ -1,6 +1,6 @@
-package com.spring.aop.service.impl;
+package com.spring.aopAspectJ.Service.impl;
 
-import com.spring.aop.service.IIntroductionService;
+import com.spring.aopAspectJ.Service.IIntroductionService;
 
 public class IntroductiondService implements IIntroductionService {
     public void induct() {
